@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_task_app/models/task.dart';
 import 'package:dotted_border/dotted_border.dart';
+import 'package:flutter_task_app/screens/home/detail/detail.dart';
 
 class Tasks extends StatelessWidget {
   final tasksList = Task.generateTasks();
@@ -38,34 +39,40 @@ class Tasks extends StatelessWidget {
   }
 
   Widget _buildTask(BuildContext context, Task task) {
-    return Container(
-      padding: EdgeInsets.all(15),
-      decoration: BoxDecoration(
-          color: task.bgColor, borderRadius: BorderRadius.circular(20)),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Icon(
-            task.iconData,
-            color: task.iconColor,
-            size: 35,
-          ),
-          SizedBox(height: 30),
-          Text(
-            task.title!,
-            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-          ),
-          SizedBox(height: 20),
-          Row(
-            children: [
-              _buildTaskStatus(
-                  task.btnColor!, task.iconColor!, '${task.left} left'),
-              SizedBox(width: 5),
-              _buildTaskStatus(
-                  Colors.white, task.iconColor!, '${task.done} done')
-            ],
-          )
-        ],
+    return GestureDetector(
+      onTap: () {
+        Navigator.of(context)
+            .push(MaterialPageRoute(builder: (context) => DetailPage(task)));
+      },
+      child: Container(
+        padding: EdgeInsets.all(15),
+        decoration: BoxDecoration(
+            color: task.bgColor, borderRadius: BorderRadius.circular(20)),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Icon(
+              task.iconData,
+              color: task.iconColor,
+              size: 35,
+            ),
+            SizedBox(height: 30),
+            Text(
+              task.title!,
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            SizedBox(height: 20),
+            Row(
+              children: [
+                _buildTaskStatus(
+                    task.btnColor!, task.iconColor!, '${task.left} left'),
+                SizedBox(width: 5),
+                _buildTaskStatus(
+                    Colors.white, task.iconColor!, '${task.done} done')
+              ],
+            )
+          ],
+        ),
       ),
     );
   }
